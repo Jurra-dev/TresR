@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'TresR.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'database3r',
+        'NAME': '3r',
         'USER': 'admin',
         'PASSWORD': 'M6BHnAr8SafTPRYzPpUW',
         'HOST': 'database3r.clw62iqau3qg.us-east-2.rds.amazonaws.com',
