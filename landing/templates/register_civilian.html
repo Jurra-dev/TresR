@@ -9,6 +9,23 @@
 <body>
     <div class="container py-5">
         <h1>Registro de Civil</h1>
+
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        <li><strong>{{ field|title }}</strong>:
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <form method="post">
             {% csrf_token %}
             <div class="mb-3">
