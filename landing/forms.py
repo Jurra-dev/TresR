@@ -5,12 +5,39 @@ class CivilianForm(forms.ModelForm):
     class Meta:
         model = Civilian
         fields = ['cc', 'first_name', 'last_name', 'email', 'phone_number']
+        labels = {
+            'cc': 'Número de identificación',
+            'first_name': 'Nombre',
+            'last_name': 'Apellidos',
+            'email': 'Correo electrónico',
+            'phone_number': 'Teléfono',
+        }
         widgets = {
             'cc': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su número de identificación'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su nombre'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese sus apellidos'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su correo electrónico'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su teléfono'}),
+        }
+        error_messages = {
+            'cc': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de identificación válido.',
+            },
+            'first_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'last_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'email': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una dirección de correo electrónico válida.',
+            },
+            'phone_number': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de teléfono válido.',
+            },
         }
 
 class CompanyForm(forms.ModelForm):
@@ -24,6 +51,30 @@ class CompanyForm(forms.ModelForm):
             'representative_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el ID del representante'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el teléfono'}),
+        }
+        error_messages = {
+            'nit': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un NIT válido.',
+            },
+            'company_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'representative_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'representative_id': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un ID válido.',
+            },
+            'email': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una dirección de correo electrónico válida.',
+            },
+            'phone_number': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de teléfono válido.',
+            },
         }
 
 class RcdManagerForm(forms.ModelForm):
@@ -49,6 +100,52 @@ class RcdManagerForm(forms.ModelForm):
             'explotation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
             'final_disposition_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de disposición final'}),
         }
+        error_messages = {
+            'name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'representative_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'phone_number': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de teléfono válido.',
+            },
+            'email': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una dirección de correo electrónico válida.',
+            },
+            'office_address': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'main_address': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'city': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'is_storage': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'is_explotation': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'is_collection_transport': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'storage_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
+            'explotation_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
+            'final_disposition_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
+        }
 
 class LogisticOperatorForm(forms.ModelForm):
     class Meta:
@@ -71,4 +168,48 @@ class LogisticOperatorForm(forms.ModelForm):
             'storage_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de almacenamiento'}),
             'explotation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
             'final_disposition_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de disposición final'}),
+        }
+        error_messages = {
+            'id': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un ID válido.',
+            },
+            'name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'representative_name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'phone_number': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de teléfono válido.',
+            },
+            'email': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una dirección de correo electrónico válida.',
+            },
+            'office_address': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'main_address': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'activity': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'city': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'storage_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
+            'explotation_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
+            'final_disposition_capacity': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese una capacidad válida.',
+            },
         }

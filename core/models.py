@@ -71,3 +71,4 @@ class LogisticOperator (models.Model):
 
     class Meta:
         ordering = ['name']
+
