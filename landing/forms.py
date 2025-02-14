@@ -44,6 +44,14 @@ class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
         fields = ['nit', 'company_name', 'representative_name', 'representative_id', 'email', 'phone_number']
+        labels = {
+            'nit': 'NIT',
+            'company_name': 'Nombre de la empresa',
+            'representative_name': 'Nombre del representante',
+            'representative_id': 'ID del representante',
+            'email': 'Correo electrónico',
+            'phone_number': 'Teléfono',
+        }
         widgets = {
             'nit': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el NIT de la empresa'}),
             'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre de la empresa'}),
@@ -85,6 +93,21 @@ class RcdManagerForm(forms.ModelForm):
             'city', 'is_storage', 'is_explotation', 'is_collection_transport', 
             'storage_capacity', 'explotation_capacity', 'final_disposition_capacity'
         ]
+        labels = {
+            'name': 'Nombre',
+            'representative_name': 'Nombre del representante',
+            'phone_number': 'Teléfono',
+            'email': 'Correo electrónico',
+            'office_address': 'Dirección de la oficina',
+            'main_address': 'Dirección principal',
+            'city': 'Ciudad',
+            'is_storage': 'Es almacenamiento',
+            'is_explotation': 'Es explotación',
+            'is_collection_transport': 'Es transporte de recolección',
+            'storage_capacity': 'Capacidad de almacenamiento',
+            'explotation_capacity': 'Capacidad de explotación',
+            'final_disposition_capacity': 'Capacidad de disposición final',
+        }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre'}),
             'representative_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del representante'}),
@@ -155,6 +178,20 @@ class LogisticOperatorForm(forms.ModelForm):
             'main_address', 'activity', 'city', 'storage_capacity', 
             'explotation_capacity', 'final_disposition_capacity'
         ]
+        labels = {
+            'id': 'ID',
+            'name': 'Nombre',
+            'representative_name': 'Nombre del representante',
+            'phone_number': 'Teléfono',
+            'email': 'Correo electrónico',
+            'office_address': 'Dirección de la oficina',
+            'main_address': 'Dirección principal',
+            'activity': 'Actividad',
+            'city': 'Ciudad',
+            'storage_capacity': 'Capacidad de almacenamiento',
+            'explotation_capacity': 'Capacidad de explotación',
+            'final_disposition_capacity': 'Capacidad de disposición final',
+        }
         widgets = {
             'id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el ID'}),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre'}),

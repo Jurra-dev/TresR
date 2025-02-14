@@ -35,7 +35,7 @@ def register_company(request):
 
     return render(request, 'register_form.html', {
         'form': form,
-        'title': 'Registro de Compañía Constructora',
+        'title': 'Registro de Persona jurídica o Empresa',
         'submit_button_text': 'Registrar Compañía'
     })
 
@@ -52,7 +52,7 @@ def register_rcd_manager(request):
 
     return render(request, 'register_form.html', {
         'form': form,
-        'title': 'Registro de Entidad de Gestión',
+        'title': 'Registro de Gestor Ambiental',
         'submit_button_text': 'Registrar Entidad'
     })
 
@@ -69,6 +69,6 @@ def register_operator(request):
 
     return render(request, 'register_form.html', {
         'form': form,
-        'title': 'Registro de Operador de Maquinaria',
+        'title': 'Registro de Equipos para excavación, demolición y transporte',
         'submit_button_text': 'Registrar Operador'
     })
