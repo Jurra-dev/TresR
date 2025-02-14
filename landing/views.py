@@ -16,7 +16,11 @@ def register_civilian(request):
     else:
         form = CivilianForm()
 
-    return render(request, 'register_civilian.html', {'form': form})
+    return render(request, 'register_form.html', {
+        'form': form,
+        'title': 'Registro de Civil',
+        'submit_button_text': 'Registrar Civil'
+    })
 
 def register_company(request):
     if request.method == 'POST':
@@ -29,7 +33,11 @@ def register_company(request):
     else:
         form = CompanyForm()
 
-    return render(request, 'register_company.html', {'form': form})
+    return render(request, 'register_form.html', {
+        'form': form,
+        'title': 'Registro de Compañía Constructora',
+        'submit_button_text': 'Registrar Compañía'
+    })
 
 def register_rcd_manager(request):
     if request.method == 'POST':
@@ -42,7 +50,11 @@ def register_rcd_manager(request):
     else:
         form = RcdManagerForm()
 
-    return render(request, 'register_rcd_manager.html', {'form': form})
+    return render(request, 'register_form.html', {
+        'form': form,
+        'title': 'Registro de Entidad de Gestión',
+        'submit_button_text': 'Registrar Entidad'
+    })
 
 def register_operator(request):
     if request.method == 'POST':
@@ -55,4 +67,8 @@ def register_operator(request):
     else:
         form = LogisticOperatorForm()
 
-    return render(request, 'register_operator.html', {'form': form})
+    return render(request, 'register_form.html', {
+        'form': form,
+        'title': 'Registro de Operador de Maquinaria',
+        'submit_button_text': 'Registrar Operador'
+    })
