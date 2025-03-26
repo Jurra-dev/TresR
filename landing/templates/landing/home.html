@@ -10,6 +10,11 @@
             max-width: 350px;  /* Limita el ancho de las tarjetas */
             margin: auto;  /* Centra las tarjetas */
         }
+        .card-img-top {
+            width: 50%; /* Reduce el tamaño de las imágenes al 50% */
+            height: auto; /* Mantiene la proporción de las imágenes */
+            margin: auto; /* Centra las imágenes dentro de la tarjeta */
+        }
     </style>
 </head>
 <body>
@@ -22,13 +27,19 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <h2><u>¡Regístrate!</u></h2>
+        <!-- Nueva sección para iniciar sesión -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 text-center">
+                <p class="mb-3">¿Ya estás registrado? <strong>Inicia sesión aquí!</strong></p>
+                <a class="btn btn-primary">Iniciar sesión</a>
+            </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center">
             <div class="col">
                 <div class="card text-center">
+                    <img src="https://prod3rbucket.s3.us-east-2.amazonaws.com/icons/civilian.png" class="card-img-top" alt="Persona Natural">
                     <div class="card-body">
                         <a href="{% url 'register_civilian' %}" class="btn btn-success w-100">Registrar Persona Natural</a>
                     </div>
@@ -39,6 +50,7 @@
             </div>
             <div class="col">
                 <div class="card text-center">
+                    <img src="https://prod3rbucket.s3.us-east-2.amazonaws.com/icons/company.png" class="card-img-top" alt="Persona Jurídica">	
                     <div class="card-body">
                         <a href="{% url 'register_company' %}" class="btn btn-success w-100">Registrar Persona Jurídica o Empresa</a>
                     </div>
@@ -49,6 +61,7 @@
             </div>
             <div class="col">
                 <div class="card text-center">
+                    <img src="https://prod3rbucket.s3.us-east-2.amazonaws.com/icons/rcdmanager.png" class="card-img-top" alt="Gestor Ambiental">
                     <div class="card-body">
                         <a href="{% url 'register_rcd_manager' %}" class="btn btn-success w-100">Registrar Gestor ambiental</a>
                     </div>
@@ -59,6 +72,7 @@
             </div>
             <div class="col">
                 <div class="card text-center">
+                    <img src="https://prod3rbucket.s3.us-east-2.amazonaws.com/icons/logisticoperator.png" class="card-img-top" alt="Operador de Maquinaria">
                     <div class="card-body">
                         <a href="{% url 'register_operator' %}" class="btn btn-success w-100">Registrar Operador de Maquinaria</a>
                     </div>
@@ -66,7 +80,6 @@
                         <small>Si eres propietario u operador de transporte de equipos de maquinaria amarilla y deseas ofrecer tus servicios, regístrate aquí.</small>
                     </div>
                 </div>
-                <iframe hidden src="https://www.google.com/maps/embed?pb=!4v1734365127295!6m8!1m7!1sEW2VxC69IIDj3MiUgRyUdA!2m2!1d42.67432310431533!2d-73.78178790396804!3f153.8116465350961!4f-36.662172265266726!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
