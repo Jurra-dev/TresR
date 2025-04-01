@@ -1,7 +1,19 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django.conf import settings
+
+class CustomUser(AbstractUser):
+    is_civilian = models.BooleanField(default=False)
+    is_company = models.BooleanField(default=False)
+    is_rcd_manager = models.BooleanField(default=False)
+    is_logistic_operator = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.username
 
 class Civilian (models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # Relación con el usuario
     cc = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
     first_name = models.CharField(null = False, blank = False, max_length = 140)
     last_name = models.CharField(null = False, blank = False, max_length = 140)
@@ -15,6 +27,7 @@ class Civilian (models.Model):
         ordering = ['last_name', 'first_name']
 
 class Company (models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     nit = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
     company_name = models.CharField(null = False, blank = False, max_length = 140)
     representative_name = models.CharField(null = False, blank = False, max_length = 140)
@@ -31,6 +44,7 @@ class Company (models.Model):
 class RcdManager (models.Model):
     #d = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
     #representative_id = models.IntegerField(null = False, blank = False, default=0)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     name = models.CharField(null=False, blank=False, max_length=140)
     representative_name = models.CharField(null=False, blank=False, max_length=140)
     phone_number = PhoneNumberField(null=False, blank=False)
@@ -52,6 +66,7 @@ class RcdManager (models.Model):
         ordering = ['name']
 
 class LogisticOperator (models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     id = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
     #representative_id = models.IntegerField(null = False, blank = False, default=0)
     name = models.CharField(null=False, blank=False, max_length=140)
@@ -65,6 +80,8 @@ class LogisticOperator (models.Model):
     storage_capacity = models.IntegerField(null=False, blank=True, default=0)
     explotation_capacity = models.IntegerField(null=False, blank=True, default=0)
     final_disposition_capacity = models.IntegerField(null=False, blank=True, default=0)
+
+    temp_field = models.CharField(max_length=10, blank=True, null=True)  # Campo temporal
 
     def __str__(self):
         return self.name

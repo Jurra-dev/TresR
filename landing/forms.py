@@ -1,7 +1,14 @@
 from django import forms
-from core.models import Civilian, Company, RcdManager, LogisticOperator
+from core.models import CustomUser, Civilian, Company, RcdManager, LogisticOperator
+from django.contrib.auth.hashers import make_password
 
 class CivilianForm(forms.ModelForm):
+    # Campo para la contraseña
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        label="Contraseña"
+    )
+
     class Meta:
         model = Civilian
         fields = ['cc', 'first_name', 'last_name', 'email', 'phone_number']
@@ -40,7 +47,30 @@ class CivilianForm(forms.ModelForm):
             },
         }
 
+    def save(self, commit=True):
+    # Crear el usuario relacionado
+        user = CustomUser(
+            username=self.cleaned_data['email'],  # Usa el email como nombre de usuario
+            email=self.cleaned_data['email'],
+            password=make_password(self.cleaned_data['password']),  # Encripta la contraseña
+            is_civilian=True  # Marca al usuario como Civilian
+        )
+        if commit:
+            user.save()
+
+        # Crear el Civilian relacionado
+        civilian = super().save(commit=False)
+        civilian.user = user  # Relaciona el usuario con el Civilian
+        if commit:
+            civilian.save()
+        return civilian
+
 class CompanyForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        label="Contraseña"
+    )
+    
     class Meta:
         model = Company
         fields = ['nit', 'company_name', 'representative_name', 'representative_id', 'email', 'phone_number']
@@ -85,7 +115,28 @@ class CompanyForm(forms.ModelForm):
             },
         }
 
+    def save(self, commit=True):
+        user = CustomUser(
+            username=self.cleaned_data['email'],
+            email=self.cleaned_data['email'],
+            password=make_password(self.cleaned_data['password']),
+            is_company=True
+        )
+        if commit:
+            user.save()
+
+        company = super().save(commit=False)
+        company.user = user
+        if commit:
+            company.save()
+        return company
+
 class RcdManagerForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        label="Contraseña"
+    )
+
     class Meta:
         model = RcdManager
         fields = [
@@ -170,7 +221,28 @@ class RcdManagerForm(forms.ModelForm):
             },
         }
 
+    def save(self, commit=True):
+        user = CustomUser(
+            username=self.cleaned_data['email'],
+            email=self.cleaned_data['email'],
+            password=make_password(self.cleaned_data['password']),
+            is_rcd_manager=True
+        )
+        if commit:
+            user.save()
+
+        rcd_manager = super().save(commit=False)
+        rcd_manager.user = user
+        if commit:
+            rcd_manager.save()
+        return rcd_manager
+
 class LogisticOperatorForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        label="Contraseña"
+    )
+
     class Meta:
         model = LogisticOperator
         fields = [
@@ -250,3 +322,19 @@ class LogisticOperatorForm(forms.ModelForm):
                 'invalid': 'Ingrese una capacidad válida.',
             },
         }
+
+    def save(self, commit=True):
+        user = CustomUser(
+            username=self.cleaned_data['email'],
+            email=self.cleaned_data['email'],
+            password=make_password(self.cleaned_data['password']),
+            is_logistic_operator=True
+        )
+        if commit:
+            user.save()
+
+        logistic_operator = super().save(commit=False)
+        logistic_operator.user = user
+        if commit:
+            logistic_operator.save()
+        return logistic_operator
