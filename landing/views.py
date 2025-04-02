@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from .forms import CivilianForm, CompanyForm, RcdManagerForm, LogisticOperatorForm
 
 # Create your views here.
@@ -72,3 +75,21 @@ def register_operator(request):
         'title': 'Registro de Equipos para excavación, demolición y transporte',
         'submit_button_text': 'Registrar Operador'
     })
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)  # Inicia sesión
+            return redirect('dashboard')  # Redirige al home después del login
+        else:
+            print(form.errors)  # Opcional: imprime errores en la consola
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')  # Redirige al login después del logout

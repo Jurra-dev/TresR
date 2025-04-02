@@ -1,6 +1,17 @@
 from django import forms
 from core.models import CustomUser, Civilian, Company, RcdManager, LogisticOperator
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.forms import AuthenticationForm
+
+class CustomLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su correo electrónico'}),
+        label="Correo electrónico"
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        label="Contraseña"
+    )
 
 class CivilianForm(forms.ModelForm):
     # Campo para la contraseña

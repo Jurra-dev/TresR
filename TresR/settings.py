@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'landing',
     'core',
+    'control_panel',
 ]
 
 MIDDLEWARE = [

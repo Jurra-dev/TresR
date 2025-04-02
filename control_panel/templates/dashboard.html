@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center">
+            Bienvenido, 
+            {% if user.is_civilian %}
+                {{ user.civilian.first_name }} {{ user.civilian.last_name }}
+            {% elif user.is_company %}
+                {{ user.company.company_name }}
+            {% elif user.is_rcd_manager %}
+                {{ user.rcdmanager.representative_name }}
+            {% elif user.is_logistic_operator %}
+                {{ user.logisticoperator.representative_name }}
+            {% else %}
+                {{ user.username }}
+            {% endif %}
+            !
+        </h1>
+        <p class="text-center">Has iniciado sesión correctamente.</p>
+
+        <div class="row justify-content-center mt-4">
+            {% if is_civilian %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Opciones para Civiles</h5>
+                            <p class="card-text">Accede a las funcionalidades específicas para civiles.</p>
+                            <a href="#" class="btn btn-primary">Ir a opciones</a>
+                        </div>
+                    </div>
+                </div>
+            {% elif is_company %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Opciones para Empresas</h5>
+                            <p class="card-text">Accede a las funcionalidades específicas para empresas.</p>
+                            <a href="#" class="btn btn-primary">Ir a opciones</a>
+                        </div>
+                    </div>
+                </div>
+            {% elif is_rcd_manager %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Opciones para Gestores Ambientales</h5>
+                            <p class="card-text">Accede a las funcionalidades específicas para gestores ambientales.</p>
+                            <a href="#" class="btn btn-primary">Ir a opciones</a>
+                        </div>
+                    </div>
+                </div>
+            {% elif is_logistic_operator %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Opciones para Operadores Logísticos</h5>
+                            <p class="card-text">Accede a las funcionalidades específicas para operadores logísticos.</p>
+                            <a href="#" class="btn btn-primary">Ir a opciones</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center">No tienes un rol asignado.</p>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+        </div>
+    </div>
+</body>
+</html>
