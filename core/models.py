@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
 
 class Civilian (models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # Relación con el usuario
-    cc = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
+    cc = models.IntegerField(null=False, blank=False, primary_key=True)
     first_name = models.CharField(null = False, blank = False, max_length = 140)
     last_name = models.CharField(null = False, blank = False, max_length = 140)
     phone_number = PhoneNumberField(null = False, blank = False)
@@ -28,10 +28,10 @@ class Civilian (models.Model):
 
 class Company (models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
-    nit = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
+    nit = models.IntegerField(null=False, blank=False, primary_key=True)
     company_name = models.CharField(null = False, blank = False, max_length = 140)
     representative_name = models.CharField(null = False, blank = False, max_length = 140)
-    representative_id = models.IntegerField(null = False, blank = False, default=0)
+    representative_id = models.IntegerField(null = False, blank = False)
     email = models.EmailField(null = False, blank = False)
     phone_number = PhoneNumberField(null = False, blank = False)
     
@@ -42,21 +42,22 @@ class Company (models.Model):
         ordering = ['company_name']
 
 class RcdManager (models.Model):
-    #d = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
-    #representative_id = models.IntegerField(null = False, blank = False, default=0)
+    id = models.IntegerField(null=False, blank=False, primary_key=True)
+    representative_id = models.IntegerField()
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     name = models.CharField(null=False, blank=False, max_length=140)
-    representative_name = models.CharField(null=False, blank=False, max_length=140)
+    representative_name = models.CharField(max_length=140)
     phone_number = PhoneNumberField(null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
     office_address = models.CharField(null=False, blank=False, max_length=255)
     main_address = models.CharField(null=False, blank=False, max_length=255)
     city = models.CharField(null=False, blank=False, max_length=140)
     is_storage = models.BooleanField(null=False, blank=False, default=False)
-    is_explotation = models.BooleanField(null=False, blank=False, default=False)
+    is_exploitation = models.BooleanField(null=False, blank=False, default=False)
     is_collection_transport = models.BooleanField(null=False, blank=False, default=False)
+    is_final_disposition = models.BooleanField(null=False, blank=False, default=False)
     storage_capacity = models.IntegerField(null=False, blank=True, default=0)
-    explotation_capacity = models.IntegerField(null=False, blank=True, default=0)
+    exploitation_capacity = models.IntegerField(null=False, blank=True, default=0)
     final_disposition_capacity = models.IntegerField(null=False, blank=True, default=0)
 
     def __str__(self):
@@ -67,21 +68,19 @@ class RcdManager (models.Model):
 
 class LogisticOperator (models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
-    id = models.IntegerField(null=False, blank=False, primary_key=True, default=0)
-    #representative_id = models.IntegerField(null = False, blank = False, default=0)
+    id = models.IntegerField(null=False, blank=False, primary_key=True)
+    representative_id = models.IntegerField()
     name = models.CharField(null=False, blank=False, max_length=140)
-    representative_name = models.CharField(null=False, blank=False, max_length=140)
+    representative_name = models.CharField(max_length=140)
     phone_number = PhoneNumberField(null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
     office_address = models.CharField(null=False, blank=False, max_length=255)
-    main_address = models.CharField(null=False, blank=False, max_length=255)
-    activity = models.CharField(null=False, blank=False, max_length=140)
-    city = models.CharField(null=False, blank=False, max_length=140)
-    storage_capacity = models.IntegerField(null=False, blank=True, default=0)
-    explotation_capacity = models.IntegerField(null=False, blank=True, default=0)
-    final_disposition_capacity = models.IntegerField(null=False, blank=True, default=0)
-
-    temp_field = models.CharField(max_length=10, blank=True, null=True)  # Campo temporal
+    # main_address = models.CharField(null=False, blank=False, max_length=255)
+    # activity = models.CharField(null=False, blank=False, max_length=140)
+    # city = models.CharField(null=False, blank=False, max_length=140)
+    # storage_capacity = models.IntegerField(null=False, blank=True, default=0)
+    # explotation_capacity = models.IntegerField(null=False, blank=True, default=0)
+    # final_disposition_capacity = models.IntegerField(null=False, blank=True, default=0)
 
     def __str__(self):
         return self.name

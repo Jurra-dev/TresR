@@ -16,7 +16,7 @@ class CustomLoginForm(AuthenticationForm):
 class CivilianForm(forms.ModelForm):
     # Campo para la contraseña
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese una contraseña'}),
         label="Contraseña"
     )
 
@@ -35,7 +35,7 @@ class CivilianForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su nombre'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese sus apellidos'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su correo electrónico'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su teléfono'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su número telefónico'}),
         }
         error_messages = {
             'cc': {
@@ -97,7 +97,7 @@ class CompanyForm(forms.ModelForm):
             'nit': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el NIT de la empresa'}),
             'company_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre de la empresa'}),
             'representative_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del representante'}),
-            'representative_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el ID del representante'}),
+            'representative_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el número de identificación del representante'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el teléfono'}),
         }
@@ -143,6 +143,13 @@ class CompanyForm(forms.ModelForm):
         return company
 
 class RcdManagerForm(forms.ModelForm):
+
+    is_legal_entity = forms.ChoiceField(
+        choices=[('natural', 'Persona Natural'), ('legal', 'Persona Jurídica')],
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        label="Tipo de Persona"
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
         label="Contraseña"
@@ -151,27 +158,35 @@ class RcdManagerForm(forms.ModelForm):
     class Meta:
         model = RcdManager
         fields = [
-            'name', 'representative_name', 'phone_number', 'email', 'office_address', 'main_address', 
-            'city', 'is_storage', 'is_explotation', 'is_collection_transport', 
-            'storage_capacity', 'explotation_capacity', 'final_disposition_capacity'
+            'id', 'name', 
+            'representative_name',
+            'representative_id',
+            'phone_number', 'email', 'office_address', 'main_address', 
+            'city', 'is_storage', 'is_exploitation', 'is_collection_transport', 'is_final_disposition',
+            'storage_capacity', 'exploitation_capacity', 'final_disposition_capacity'
         ]
         labels = {
-            'name': 'Nombre',
+            'id': 'Número de identificación o NIT',
+            'name': 'Nombre de la empresa o representante legal',
+            'representative_id': 'Número de identificación del representante legal',
             'representative_name': 'Nombre del representante',
             'phone_number': 'Teléfono',
             'email': 'Correo electrónico',
-            'office_address': 'Dirección de la oficina',
+            'office_address': 'Dirección de la oficina (Si aplica)',
             'main_address': 'Dirección principal',
             'city': 'Ciudad',
             'is_storage': 'Es almacenamiento',
-            'is_explotation': 'Es explotación',
+            'is_exploitation': 'Es explotación',
             'is_collection_transport': 'Es transporte de recolección',
+            'is_final_disposition': 'Es disposición final',
             'storage_capacity': 'Capacidad de almacenamiento',
-            'explotation_capacity': 'Capacidad de explotación',
+            'exploitation_capacity': 'Capacidad de explotación',
             'final_disposition_capacity': 'Capacidad de disposición final',
         }
         widgets = {
+            'id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su número de identificación o NIT'}),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre'}),
+            'representative_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el número de identificación del representante'}),
             'representative_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del representante'}),
             'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el teléfono'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico'}),
@@ -179,10 +194,11 @@ class RcdManagerForm(forms.ModelForm):
             'main_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección principal'}),
             'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la ciudad'}),
             'is_storage': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-            'is_explotation': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_exploitation': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'is_collection_transport': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_final_disposition': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'storage_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de almacenamiento'}),
-            'explotation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
+            'exploitation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
             'final_disposition_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de disposición final'}),
         }
         error_messages = {
@@ -191,6 +207,10 @@ class RcdManagerForm(forms.ModelForm):
             },
             'representative_name': {
                 'required': 'Este campo es obligatorio.',
+            },
+            'representative_id': {
+                'required': 'Este campo es obligatorio.',
+                'invalid': 'Ingrese un número de identificación válido.'
             },
             'phone_number': {
                 'required': 'Este campo es obligatorio.',
@@ -212,17 +232,20 @@ class RcdManagerForm(forms.ModelForm):
             'is_storage': {
                 'required': 'Este campo es obligatorio.',
             },
-            'is_explotation': {
+            'is_exploitation': {
                 'required': 'Este campo es obligatorio.',
             },
             'is_collection_transport': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'is_final_disposition': {
                 'required': 'Este campo es obligatorio.',
             },
             'storage_capacity': {
                 'required': 'Este campo es obligatorio.',
                 'invalid': 'Ingrese una capacidad válida.',
             },
-            'explotation_capacity': {
+            'exploitation_capacity': {
                 'required': 'Este campo es obligatorio.',
                 'invalid': 'Ingrese una capacidad válida.',
             },
@@ -249,6 +272,13 @@ class RcdManagerForm(forms.ModelForm):
         return rcd_manager
 
 class LogisticOperatorForm(forms.ModelForm):
+
+    is_legal_entity = forms.ChoiceField(
+        choices=[('natural', 'Persona Natural'), ('legal', 'Persona Jurídica')],
+        widget=forms.RadioSelect(attrs={'class': 'form-check-input'}),
+        label="Tipo de Persona"
+    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su contraseña'}),
         label="Contraseña"
@@ -257,37 +287,44 @@ class LogisticOperatorForm(forms.ModelForm):
     class Meta:
         model = LogisticOperator
         fields = [
-            'id', 'name', 'representative_name', 'phone_number', 'email', 'office_address', 
-            'main_address', 'activity', 'city', 'storage_capacity', 
-            'explotation_capacity', 'final_disposition_capacity'
+            'id', 'name',
+            'representative_id',
+            'representative_name',
+            'phone_number', 'email', 'office_address', 
+            # 'main_address', 
+            # 'activity', 'storage_capacity', 
+            # 'explotation_capacity', 'final_disposition_capacity',
+            # 'city'
         ]
         labels = {
-            'id': 'ID',
-            'name': 'Nombre',
-            'representative_name': 'Nombre del representante',
+            'id': 'Número de identificación o NIT',
+            'name': 'Nombre de la empresa o representante legal',
+            'representative_id': 'Número de identificación del representante legal',
+            'representative_name': 'Nombre del representante legal',
             'phone_number': 'Teléfono',
             'email': 'Correo electrónico',
             'office_address': 'Dirección de la oficina',
-            'main_address': 'Dirección principal',
-            'activity': 'Actividad',
-            'city': 'Ciudad',
-            'storage_capacity': 'Capacidad de almacenamiento',
-            'explotation_capacity': 'Capacidad de explotación',
-            'final_disposition_capacity': 'Capacidad de disposición final',
+            # 'main_address': 'Dirección principal',
+            # 'activity': 'Actividad',
+            # 'city': 'Ciudad',
+            # 'storage_capacity': 'Capacidad de almacenamiento',
+            # 'explotation_capacity': 'Capacidad de explotación',
+            # 'final_disposition_capacity': 'Capacidad de disposición final',
         }
         widgets = {
-            'id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el ID'}),
+            'id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su número de identificación o NIT'}),
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre'}),
-            'representative_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del representante'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el teléfono'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el correo electrónico'}),
-            'office_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección de la oficina'}),
-            'main_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección principal'}),
-            'activity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la actividad'}),
-            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la ciudad'}),
-            'storage_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de almacenamiento'}),
-            'explotation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
-            'final_disposition_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de disposición final'}),
+            'representative_id': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el número de identificación del representante'}),
+            'representative_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del representante legal'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese un número de teléfono de contacto'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese su correo electrónico'}),
+            'office_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección de la oficina (si aplica)'}),
+            # 'main_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección principal del pr'}),
+            # 'activity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la actividad'}),
+            # 'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la ciudad'}),
+            # 'storage_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de almacenamiento'}),
+            # 'explotation_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de explotación'}),
+            # 'final_disposition_capacity': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la capacidad de disposición final'}),
         }
         error_messages = {
             'id': {
@@ -295,6 +332,9 @@ class LogisticOperatorForm(forms.ModelForm):
                 'invalid': 'Ingrese un ID válido.',
             },
             'name': {
+                'required': 'Este campo es obligatorio.',
+            },
+            'representative_id': {
                 'required': 'Este campo es obligatorio.',
             },
             'representative_name': {
@@ -311,27 +351,27 @@ class LogisticOperatorForm(forms.ModelForm):
             'office_address': {
                 'required': 'Este campo es obligatorio.',
             },
-            'main_address': {
-                'required': 'Este campo es obligatorio.',
-            },
-            'activity': {
-                'required': 'Este campo es obligatorio.',
-            },
-            'city': {
-                'required': 'Este campo es obligatorio.',
-            },
-            'storage_capacity': {
-                'required': 'Este campo es obligatorio.',
-                'invalid': 'Ingrese una capacidad válida.',
-            },
-            'explotation_capacity': {
-                'required': 'Este campo es obligatorio.',
-                'invalid': 'Ingrese una capacidad válida.',
-            },
-            'final_disposition_capacity': {
-                'required': 'Este campo es obligatorio.',
-                'invalid': 'Ingrese una capacidad válida.',
-            },
+            # 'main_address': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
+            # 'activity': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
+            # 'city': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
+            # 'storage_capacity': {
+            #     'required': 'Este campo es obligatorio.',
+            #     'invalid': 'Ingrese una capacidad válida.',
+            # },
+            # 'explotation_capacity': {
+            #     'required': 'Este campo es obligatorio.',
+            #     'invalid': 'Ingrese una capacidad válida.',
+            # },
+            # 'final_disposition_capacity': {
+            #     'required': 'Este campo es obligatorio.',
+            #     'invalid': 'Ingrese una capacidad válida.',
+            # },
         }
 
     def save(self, commit=True):

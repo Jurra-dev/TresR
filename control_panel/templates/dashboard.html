@@ -15,9 +15,9 @@
             {% elif user.is_company %}
                 {{ user.company.company_name }}
             {% elif user.is_rcd_manager %}
-                {{ user.rcdmanager.representative_name }}
+                {{ user.rcdmanager.name }}
             {% elif user.is_logistic_operator %}
-                {{ user.logisticoperator.representative_name }}
+                {{ user.logisticoperator.name }}
             {% else %}
                 {{ user.username }}
             {% endif %}

@@ -21,8 +21,8 @@ def register_civilian(request):
 
     return render(request, 'register_form.html', {
         'form': form,
-        'title': 'Registro de Civil',
-        'submit_button_text': 'Registrar Civil'
+        'title': 'Registro de Persona natural',
+        'submit_button_text': 'Registrar Persona natural'
     })
 
 def register_company(request):
@@ -39,7 +39,7 @@ def register_company(request):
     return render(request, 'register_form.html', {
         'form': form,
         'title': 'Registro de Persona jurídica o Empresa',
-        'submit_button_text': 'Registrar Compañía'
+        'submit_button_text': 'Registrar Persona jurídica'
     })
 
 def register_rcd_manager(request):
@@ -56,7 +56,8 @@ def register_rcd_manager(request):
     return render(request, 'register_form.html', {
         'form': form,
         'title': 'Registro de Gestor Ambiental',
-        'submit_button_text': 'Registrar Entidad'
+        'submit_button_text': 'Registrar Gestor Ambiental',
+        'person_type_selection' : True
     })
 
 def register_operator(request):
@@ -72,8 +73,9 @@ def register_operator(request):
 
     return render(request, 'register_form.html', {
         'form': form,
-        'title': 'Registro de Equipos para excavación, demolición y transporte',
-        'submit_button_text': 'Registrar Operador'
+        'title': 'Registro de Proveedores de equipos de excavación, demolición y transporte',
+        'submit_button_text': 'Registrar Operador',
+        'person_type_selection' : True
     })
 
 def login_view(request):
