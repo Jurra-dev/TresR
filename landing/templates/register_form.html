@@ -18,19 +18,52 @@
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
-                            {% for field in form %}
+                            {% if person_type_selection %}
                                 <div class="mb-3">
-                                    {{ field.label_tag }}
-                                    {{ field }}
-                                    {% if field.errors %}
-                                        <div class="text-danger">
-                                            {% for error in field.errors %}
-                                                {{ error }}
-                                            {% endfor %}
+                                    <label class="form-label">¿Qué tipo de persona eres?</label>
+                                    {% for radio in form.is_legal_entity %}
+                                        <div class="form-check">
+                                            {{ radio.tag }} {{ radio.choice_label }}
                                         </div>
-                                    {% endif %}
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
+                            {% endif %}
+
+                            {% comment %} Contenedor para los campos del form {% endcomment %}
+                            <div id="form-fields" {% if person_type_selection %}style="display: none;"{% endif %}>
+                                {% for field in form %}
+                                    {% if field.name != "is_legal_entity" %}
+                                        <script>
+                                            // Aquí puedes agregar lógica adicional si es necesario
+                                        </script>
+                                        {% if person_type_selection and field.name == "representative_name" or field.name == "representative_id" %}
+                                            <div class="mb-3 representative-field" style="display: none;">
+                                                {{ field.label_tag }}
+                                                {{ field }}
+                                                {% if field.errors %}
+                                                    <div class="text-danger">
+                                                        {% for error in field.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% else %}
+                                            <div class="mb-3" style ="display:block;">
+                                                {{ field.label_tag }}
+                                                {{ field }}
+                                                {% if field.errors %}
+                                                    <div class="text-danger">
+                                                        {% for error in field.errors %}
+                                                            {{ error }}
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                             <button type="submit" class="btn btn-success w-100">{{ submit_button_text }}</button>
                         </form>
                     </div>
@@ -39,6 +72,48 @@
             </div>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function toggleRepresentativeFields() {
+                const formFields = document.getElementById('form-fields');
+                const selected = document.querySelector('input[name="is_legal_entity"]:checked');
+                const representativeFields = document.querySelectorAll('.representative-field');
+                const nameFieldLabel = document.querySelector('label[for="id_name"]');
+                const mainIdFieldLabel = document.querySelector('label[for="id_id"]');
+
+                console.log('Selected value:', selected ? selected.value : 'None selected');
+                
+                if (selected) {
+
+                    formFields.style.display = 'block';
+
+                    if (selected && selected.value === 'legal') {
+                        nameFieldLabel.textContent = 'Nombre de la empresa';
+                        mainIdFieldLabel.textContent = 'NIT de la empresa';
+                        representativeFields.forEach(field => {
+                            field.style.display = 'block';
+                            field.querySelector('input').setAttribute('required', 'required');
+                        });
+                    } else {
+                        nameFieldLabel.textContent = 'Nombre y apellido';
+                        mainIdFieldLabel.textContent = 'Número de documento';
+                        representativeFields.forEach(field => {
+                            field.style.display = 'none';
+                            field.querySelector('input').removeAttribute('required');});
+                    }
+                    
+                }
+            }
+
+            document.querySelectorAll('input[name="is_legal_entity"]').forEach(input => {
+                input.addEventListener('change', toggleRepresentativeFields);
+            });
+
+            toggleRepresentativeFields(); // Ejecutar al cargar
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

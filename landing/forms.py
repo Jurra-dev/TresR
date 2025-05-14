@@ -205,13 +205,13 @@ class RcdManagerForm(forms.ModelForm):
             'name': {
                 'required': 'Este campo es obligatorio.',
             },
-            'representative_name': {
-                'required': 'Este campo es obligatorio.',
-            },
-            'representative_id': {
-                'required': 'Este campo es obligatorio.',
-                'invalid': 'Ingrese un número de identificación válido.'
-            },
+            # 'representative_name': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
+            # 'representative_id': {
+            #     'required': 'Este campo es obligatorio.',
+            #     'invalid': 'Ingrese un número de identificación válido.'
+            # },
             'phone_number': {
                 'required': 'Este campo es obligatorio.',
                 'invalid': 'Ingrese un número de teléfono válido.',
@@ -254,6 +254,16 @@ class RcdManagerForm(forms.ModelForm):
                 'invalid': 'Ingrese una capacidad válida.',
             },
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        is_legal_entity = cleaned_data.get('is_legal_entity')
+        if is_legal_entity == 'legal':
+            if not cleaned_data.get('representative_name'):
+                self.add_error('representative_name', 'Este campo es obligatorio para personas jurídicas.')
+            if not cleaned_data.get('representative_id'):
+                self.add_error('representative_id', 'Este campo es obligatorio para personas jurídicas.')
+        return cleaned_data
 
     def save(self, commit=True):
         user = CustomUser(
@@ -334,12 +344,12 @@ class LogisticOperatorForm(forms.ModelForm):
             'name': {
                 'required': 'Este campo es obligatorio.',
             },
-            'representative_id': {
-                'required': 'Este campo es obligatorio.',
-            },
-            'representative_name': {
-                'required': 'Este campo es obligatorio.',
-            },
+            # 'representative_id': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
+            # 'representative_name': {
+            #     'required': 'Este campo es obligatorio.',
+            # },
             'phone_number': {
                 'required': 'Este campo es obligatorio.',
                 'invalid': 'Ingrese un número de teléfono válido.',
@@ -374,6 +384,16 @@ class LogisticOperatorForm(forms.ModelForm):
             # },
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        is_legal_entity = cleaned_data.get('is_legal_entity')
+        if is_legal_entity == 'legal':
+            if not cleaned_data.get('representative_name'):
+                self.add_error('representative_name', 'Este campo es obligatorio para personas jurídicas.')
+            if not cleaned_data.get('representative_id'):
+                self.add_error('representative_id', 'Este campo es obligatorio para personas jurídicas.')
+        return cleaned_data
+    
     def save(self, commit=True):
         user = CustomUser(
             username=self.cleaned_data['email'],

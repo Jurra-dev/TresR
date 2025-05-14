@@ -43,13 +43,13 @@ class Company (models.Model):
 
 class RcdManager (models.Model):
     id = models.IntegerField(null=False, blank=False, primary_key=True)
-    representative_id = models.IntegerField()
+    representative_id = models.IntegerField(null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     name = models.CharField(null=False, blank=False, max_length=140)
-    representative_name = models.CharField(max_length=140)
+    representative_name = models.CharField(max_length=140, null=True, blank=True)
     phone_number = PhoneNumberField(null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
-    office_address = models.CharField(null=False, blank=False, max_length=255)
+    office_address = models.CharField(max_length=255)
     main_address = models.CharField(null=False, blank=False, max_length=255)
     city = models.CharField(null=False, blank=False, max_length=140)
     is_storage = models.BooleanField(null=False, blank=False, default=False)
@@ -69,12 +69,12 @@ class RcdManager (models.Model):
 class LogisticOperator (models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # Relación con el usuario
     id = models.IntegerField(null=False, blank=False, primary_key=True)
-    representative_id = models.IntegerField()
+    representative_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(null=False, blank=False, max_length=140)
-    representative_name = models.CharField(max_length=140)
+    representative_name = models.CharField(null=True, blank=True, max_length=140)
     phone_number = PhoneNumberField(null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
-    office_address = models.CharField(null=False, blank=False, max_length=255)
+    office_address = models.CharField(max_length=255)
     # main_address = models.CharField(null=False, blank=False, max_length=255)
     # activity = models.CharField(null=False, blank=False, max_length=140)
     # city = models.CharField(null=False, blank=False, max_length=140)
